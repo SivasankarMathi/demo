@@ -1,11 +1,17 @@
-import { useState } from 'react'
+import { useState, useRef, useCallback } from 'react'
 import styles from './Login.module.css'
+
+const MAX_LOGIN_ATTEMPTS = 5
+const LOCKOUT_DURATION_MS = 60_000
 
 function Login({ onLogin }) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [errors, setErrors] = useState({})
   const [touched, setTouched] = useState({})
+  const [lockout, setLockout] = useState(false)
+  const attemptsRef = useRef(0)
+  const lockoutTimerRef = useRef(null)
 
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -56,6 +62,8 @@ function Login({ onLogin }) {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+
+    if (lockout) return
     
     const emailError = validateEmail(email)
     const passwordError = validatePassword(password)
@@ -64,6 +72,17 @@ function Login({ onLogin }) {
     setErrors({ email: emailError, password: passwordError })
 
     if (!emailError && !passwordError) {
+      attemptsRef.current += 1
+
+      if (attemptsRef.current >= MAX_LOGIN_ATTEMPTS) {
+        setLockout(true)
+        lockoutTimerRef.current = setTimeout(() => {
+          setLockout(false)
+          attemptsRef.current = 0
+        }, LOCKOUT_DURATION_MS)
+        return
+      }
+
       onLogin(email, password)
     }
   }
@@ -89,6 +108,7 @@ function Login({ onLogin }) {
               onBlur={handleEmailBlur}
               className={`${styles.input} ${touched.email && errors.email ? styles.inputError : ''}`}
               placeholder="Enter your email"
+              autoComplete="email"
               aria-invalid={touched.email && errors.email ? 'true' : 'false'}
               aria-describedby={touched.email && errors.email ? 'email-error' : undefined}
             />
@@ -111,6 +131,7 @@ function Login({ onLogin }) {
               onBlur={handlePasswordBlur}
               className={`${styles.input} ${touched.password && errors.password ? styles.inputError : ''}`}
               placeholder="Enter your password"
+              autoComplete="current-password"
               aria-invalid={touched.password && errors.password ? 'true' : 'false'}
               aria-describedby={touched.password && errors.password ? 'password-error' : undefined}
             />
@@ -121,12 +142,18 @@ function Login({ onLogin }) {
             )}
           </div>
 
+          {lockout && (
+            <p className={styles.error} role="alert">
+              Too many login attempts. Please try again in 60 seconds.
+            </p>
+          )}
+
           <button
             type="submit"
             className={styles.submitButton}
-            disabled={!isFormValid}
+            disabled={!isFormValid || lockout}
           >
-            Login
+            {lockout ? 'Locked' : 'Login'}
           </button>
         </form>
       </div>
