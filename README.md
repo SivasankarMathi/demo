@@ -2,6 +2,9 @@
 
 This is a sample project demonstrating basic functionality.
 
+## Test Edit
+- This is a test edit for PR purposes
+
 ## Features
 - Feature 1: Basic setup
 - Feature 2: Configuration
