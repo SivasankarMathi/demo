@@ -10,3 +10,6 @@ This is a sample project demonstrating basic functionality.
 
 ## Usage
 Clone and install dependencies to get started.
+
+## Contributing
+Pull requests are welcome! Please read the contribution guidelines before submitting.
