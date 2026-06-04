@@ -2,6 +2,8 @@
 
 A simple React application with a login page built using Vite, featuring form validation and responsive design.
 
+**Updated**: This README has been updated to test PR creation functionality.
+
 **Branch**: test
 
 ## Features
