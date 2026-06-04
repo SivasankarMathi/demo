@@ -1,6 +1,6 @@
 # Demo
 
-This is a sample project demonstrating basic functionality.
+This is a sample project demonstrating basic functionality. Updated for PR testing.
 
 ## Features
 - Feature 1: Basic setup and initialization
