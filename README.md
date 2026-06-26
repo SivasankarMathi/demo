@@ -10,3 +10,6 @@ This is a sample project demonstrating basic functionality.
 
 ## Usage
 Clone and install dependencies to get started.
+
+## Installation
+Run `npm install` to install all required dependencies.
