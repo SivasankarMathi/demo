@@ -1,0 +1,91 @@
+<div class="dashboard">
+  <header class="dashboard-header">
+    <h1>Customer Dashboard</h1>
+    <p>Manage and view all customer data in one place.</p>
+  </header>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-value">{{ totalCustomers() }}</div>
+      <div class="stat-label">Total Customers</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">{{ activeCustomers() }}</div>
+      <div class="stat-label">Active Customers</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">{{ formatCurrency(totalRevenue()) }}</div>
+      <div class="stat-label">Total Revenue</div>
+    </div>
+  </div>
+
+  <div class="toolbar">
+    <input
+      type="text"
+      class="search-input"
+      placeholder="Search by name, email, or phone..."
+      [value]="searchQuery()"
+      (input)="onSearch($event)"
+    />
+    <div class="filter-buttons">
+      <button
+        class="filter-btn"
+        [class.active]="statusFilter() === 'All'"
+        (click)="onFilterChange('All')"
+      >
+        All
+      </button>
+      <button
+        class="filter-btn"
+        [class.active]="statusFilter() === 'Active'"
+        (click)="onFilterChange('Active')"
+      >
+        Active
+      </button>
+      <button
+        class="filter-btn"
+        [class.active]="statusFilter() === 'Inactive'"
+        (click)="onFilterChange('Inactive')"
+      >
+        Inactive
+      </button>
+    </div>
+  </div>
+
+  <div class="table-wrapper">
+    <table class="customer-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Status</th>
+          <th>Joined</th>
+          <th>Revenue</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (customer of filteredCustomers(); track customer.id) {
+          <tr>
+            <td>#{{ customer.id }}</td>
+            <td>{{ customer.name }}</td>
+            <td>{{ customer.email }}</td>
+            <td>{{ customer.phone }}</td>
+            <td>
+              <span class="status-badge" [class.active]="customer.status === 'Active'" [class.inactive]="customer.status === 'Inactive'">
+                {{ customer.status }}
+              </span>
+            </td>
+            <td>{{ customer.joined }}</td>
+            <td>{{ formatCurrency(customer.revenue) }}</td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="7" class="empty-state">No customers found.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>
