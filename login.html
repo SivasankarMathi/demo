@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login</title>
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 40px 36px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 24px 48px rgba(0, 0, 0, 0.4);
+    }
+
+    .logo {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .logo svg {
+      width: 48px;
+      height: 48px;
+      fill: #e94560;
+    }
+
+    h1 {
+      text-align: center;
+      color: #ffffff;
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: rgba(255,255,255,0.45);
+      font-size: 0.875rem;
+      margin-bottom: 32px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      color: rgba(255,255,255,0.75);
+      font-size: 0.85rem;
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px 14px;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 8px;
+      color: #ffffff;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    input::placeholder {
+      color: rgba(255,255,255,0.25);
+    }
+
+    input:focus {
+      border-color: #e94560;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .forgot {
+      text-align: right;
+      margin-top: 6px;
+    }
+
+    .forgot a {
+      color: #e94560;
+      font-size: 0.8rem;
+      text-decoration: none;
+    }
+
+    .forgot a:hover {
+      text-decoration: underline;
+    }
+
+    .error-msg {
+      color: #ff6b6b;
+      font-size: 0.82rem;
+      margin-top: 8px;
+      display: none;
+    }
+
+    button[type="submit"] {
+      width: 100%;
+      padding: 13px;
+      background: #e94560;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 28px;
+      transition: background 0.2s, transform 0.1s;
+    }
+
+    button[type="submit"]:hover {
+      background: #c73652;
+    }
+
+    button[type="submit"]:active {
+      transform: scale(0.98);
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 24px 0;
+      color: rgba(255,255,255,0.25);
+      font-size: 0.8rem;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(255,255,255,0.1);
+    }
+
+    .signup {
+      text-align: center;
+      color: rgba(255,255,255,0.45);
+      font-size: 0.875rem;
+    }
+
+    .signup a {
+      color: #e94560;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .signup a:hover {
+      text-decoration: underline;
+    }
+
+    /* Success overlay */
+    .success-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+    }
+
+    .success-overlay.show {
+      display: flex;
+    }
+
+    .success-box {
+      background: #1a1a2e;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 16px;
+      padding: 40px;
+      text-align: center;
+      max-width: 320px;
+      width: 90%;
+    }
+
+    .success-box .check {
+      font-size: 3rem;
+      margin-bottom: 16px;
+    }
+
+    .success-box h2 {
+      color: #fff;
+      margin-bottom: 8px;
+    }
+
+    .success-box p {
+      color: rgba(255,255,255,0.5);
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <div class="logo">
+      <!-- Simple lock icon -->
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10
+                 c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2
+                 s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1
+                 1.71 0 3.1 1.39 3.1 3.1v2z"/>
+      </svg>
+    </div>
+
+    <h1>Welcome Back</h1>
+    <p class="subtitle">Sign in to your account</p>
+
+    <form id="loginForm" novalidate>
+      <div class="form-group">
+        <label for="email">Email address</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder="you@example.com"
+          autocomplete="email"
+          required
+        />
+        <p class="error-msg" id="emailError">Please enter a valid email address.</p>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="••••••••"
+          autocomplete="current-password"
+          required
+        />
+        <div class="forgot"><a href="#">Forgot password?</a></div>
+        <p class="error-msg" id="passwordError">Password must be at least 6 characters.</p>
+      </div>
+
+      <p class="error-msg" id="credentialsError" style="display:none; margin-top:4px;">
+        Invalid email or password. Try <strong>user@example.com</strong> / <strong>password123</strong>
+      </p>
+
+      <button type="submit">Sign In</button>
+    </form>
+
+    <div class="divider">or</div>
+
+    <p class="signup">Don't have an account? <a href="#">Sign up</a></p>
+  </div>
+
+  <!-- Success overlay -->
+  <div class="success-overlay" id="successOverlay">
+    <div class="success-box">
+      <div class="check">✅</div>
+      <h2>Login Successful!</h2>
+      <p>Welcome back. You are now signed in.</p>
+    </div>
+  </div>
+
+  <script>
+    // Demo credentials
+    const DEMO_EMAIL    = 'user@example.com';
+    const DEMO_PASSWORD = 'password123';
+
+    const form             = document.getElementById('loginForm');
+    const emailInput       = document.getElementById('email');
+    const passwordInput    = document.getElementById('password');
+    const emailError       = document.getElementById('emailError');
+    const passwordError    = document.getElementById('passwordError');
+    const credentialsError = document.getElementById('credentialsError');
+    const successOverlay   = document.getElementById('successOverlay');
+
+    function isValidEmail(val) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
+    }
+
+    function clearErrors() {
+      emailError.style.display       = 'none';
+      passwordError.style.display    = 'none';
+      credentialsError.style.display = 'none';
+    }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      clearErrors();
+
+      const email    = emailInput.value.trim();
+      const password = passwordInput.value;
+      let valid = true;
+
+      if (!isValidEmail(email)) {
+        emailError.style.display = 'block';
+        valid = false;
+      }
+
+      if (password.length < 6) {
+        passwordError.style.display = 'block';
+        valid = false;
+      }
+
+      if (!valid) return;
+
+      // Check against demo credentials
+      if (email !== DEMO_EMAIL || password !== DEMO_PASSWORD) {
+        credentialsError.style.display = 'block';
+        return;
+      }
+
+      // Success
+      successOverlay.classList.add('show');
+      setTimeout(() => successOverlay.classList.remove('show'), 3000);
+    });
+
+    // Live clear on input
+    emailInput.addEventListener('input', clearErrors);
+    passwordInput.addEventListener('input', clearErrors);
+  </script>
+</body>
+</html>
