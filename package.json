@@ -10,6 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@angular/cli": "^17.3.17"
+    "@angular/cli": "^17.3.17",
+    "cors": "^2.8.6",
+    "express": "^5.2.1"
   }
 }
