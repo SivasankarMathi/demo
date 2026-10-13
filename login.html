@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Modern Portal</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%);
+      color: #f8fafc;
+      padding: 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 440px;
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-radius: 16px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      padding: 40px 32px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .logo-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+      color: #ffffff;
+      font-size: 24px;
+      margin-bottom: 16px;
+      box-shadow: 0 10px 20px -5px rgba(99, 102, 241, 0.4);
+    }
+
+    .header h1 {
+      font-size: 26px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 8px;
+    }
+
+    .header p {
+      font-size: 14px;
+      color: #94a3b8;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: #cbd5e1;
+      margin-bottom: 8px;
+    }
+
+    .input-wrapper {
+      position: relative;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 12px 16px;
+      font-size: 14px;
+      border-radius: 10px;
+      background: #0f172a;
+      border: 1px solid #334155;
+      color: #ffffff;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    input[type="text"]:focus,
+    input[type="password"]:focus {
+      border-color: #6366f1;
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25);
+    }
+
+    .actions-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      margin-bottom: 24px;
+    }
+
+    .remember-me {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #94a3b8;
+      cursor: pointer;
+    }
+
+    .forgot-link {
+      color: #818cf8;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .forgot-link:hover {
+      color: #a5b4fc;
+      text-decoration: underline;
+    }
+
+    .btn-submit {
+      width: 100%;
+      padding: 13px;
+      font-size: 15px;
+      font-weight: 600;
+      color: #ffffff;
+      background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      box-shadow: 0 10px 20px -5px rgba(79, 70, 229, 0.4);
+      transition: all 0.2s ease;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .btn-submit:hover {
+      background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%);
+      transform: translateY(-1px);
+    }
+
+    .btn-submit:active {
+      transform: translateY(0);
+    }
+
+    .alert {
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      margin-bottom: 20px;
+      display: none;
+    }
+
+    .alert-error {
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #fca5a5;
+    }
+
+    .alert-success {
+      background: rgba(34, 197, 94, 0.15);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      color: #86efac;
+    }
+
+    .demo-credentials {
+      margin-top: 28px;
+      padding-top: 20px;
+      border-top: 1px solid #334155;
+      text-align: center;
+      font-size: 13px;
+      color: #94a3b8;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      background: #1e293b;
+      border: 1px solid #475569;
+      border-radius: 4px;
+      color: #e2e8f0;
+      font-family: monospace;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="logo-badge">⚡</div>
+      <h1>SIGN IN</h1>
+      <p>ENTER YOUR CREDENTIALS TO ACCESS YOUR ACCOUNT</p>
+    </div>
+
+    <div id="alert-box" class="alert"></div>
+
+    <form id="login-form">
+      <div class="form-group">
+        <label for="username">USERNAME OR EMAIL</label>
+        <div class="input-wrapper">
+          <input type="text" id="username" placeholder="admin" required autocomplete="username">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">PASSWORD</label>
+        <div class="input-wrapper">
+          <input type="password" id="password" placeholder="••••••••" required autocomplete="current-password">
+        </div>
+      </div>
+
+      <div class="actions-row">
+        <label class="remember-me">
+          <input type="checkbox" id="remember">
+          <span>REMEMBER ME</span>
+        </label>
+        <a href="#" class="forgot-link" onclick="alert('PASSWORD RESET LINK HAS BEEN SENT IF REGISTERED.'); return false;">FORGOT PASSWORD?</a>
+      </div>
+
+      <button type="submit" class="btn-submit" id="submit-btn">SIGN IN</button>
+    </form>
+
+    <div class="demo-credentials">
+      <p>DEFAULT DEMO ACCESS: <span class="badge">admin</span> / <span class="badge">admin123</span></p>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('login-form');
+    const alertBox = document.getElementById('alert-box');
+    const submitBtn = document.getElementById('submit-btn');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const user = document.getElementById('username').value.trim();
+      const pass = document.getElementById('password').value;
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'AUTHENTICATING...';
+
+      setTimeout(() => {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'SIGN IN';
+
+        if (user === 'admin' && pass === 'admin123') {
+          alertBox.className = 'alert alert-success';
+          alertBox.style.display = 'block';
+          alertBox.textContent = 'SUCCESSFULLY AUTHENTICATED! WELCOME BACK, ' + user.toUpperCase() + '.';
+        } else {
+          alertBox.className = 'alert alert-error';
+          alertBox.style.display = 'block';
+          alertBox.textContent = 'INVALID CREDENTIALS. PLEASE USE ADMIN / ADMIN123.';
+        }
+      }, 600);
+    });
+  </script>
+</body>
+</html>
