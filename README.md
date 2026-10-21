@@ -12,7 +12,7 @@ This is a sample project demonstrating basic functionality.
 Clone and install dependencies to get started.
 
 ## Sample Test Operations
-- Run unit tests: `npm test`
-- Run lint checks: `npm run lint`
+- Go to the app folder: `cd angular-login && npm install`
+- Run unit tests (Karma): `npm test`
 - Build the project: `npm run build`
 - Serve locally and verify at `http://localhost:4200`: `npm start`
