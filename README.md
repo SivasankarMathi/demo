@@ -16,3 +16,7 @@ Clone and install dependencies to get started.
 - Run unit tests (Karma): `npm test`
 - Build the project: `npm run build`
 - Serve locally and verify at `http://localhost:4200`: `npm start`
+- Run tests once without watch mode: `npm test -- --watch=false`
+- Run tests in headless Chrome: `npm test -- --browsers=ChromeHeadless`
+- Build for production: `npm run build -- --configuration production`
+- Find the build output in the `dist/` folder
