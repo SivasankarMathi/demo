@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Login</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="card">
+  <h1>Welcome back</h1>
+  <p class="sub">Sign in to your account</p>
+  <form id="form" novalidate>
+    <label for="email">Email</label>
+    <input id="email" type="email" autocomplete="email" required>
+    <label for="password">Password</label>
+    <input id="password" type="password" autocomplete="current-password" required minlength="6">
+    <p id="msg" role="alert"></p>
+    <button type="submit">Log in</button>
+  </form>
+</main>
+<script src="script.js"></script>
+</body>
+</html>
